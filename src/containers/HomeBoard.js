@@ -6,9 +6,6 @@ import QuickMenu from "../components/QuickMenu";
 function HomeBoard() {
   return (
     <div className="boardArea">
-      <div className="quickMenuArea">
-        <QuickMenu />
-      </div>
       <div className="tabsArea">
         <TabsArea />
       </div>

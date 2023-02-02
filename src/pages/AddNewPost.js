@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { createEditor } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import { Button } from "@chakra-ui/react";
+
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function AddNewPost() {
-  const initialValue = [
-    {
-      type: "paragraph",
-      children: [{ text: "A line of text in a paragraph." }],
-    },
-  ];
-  const [editor] = useState(() => withReact(createEditor()));
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
+  const sendHtmlData = () => {
+    console.log(editorState);
+  };
   return (
-    <Slate editor={editor} value={initialValue}>
-      <Editable />
-    </Slate>
+    <>
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={setEditorState}
+        wrapperClassName="wrapper-class"
+        editorClassName="editor-class"
+        toolbarClassName="toolbar-class"
+      />
+      <Button onClick={sendHtmlData}>Send Data</Button>
+    </>
   );
 }
 

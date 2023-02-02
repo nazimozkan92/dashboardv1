@@ -14,7 +14,23 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function QuickMenu() {
+function QuickMenu({ addNewTabItem }) {
+  const addNewPost = () => {
+    addNewTabItem([
+      {
+        tabId: 1,
+        label: "Yazı Ekle",
+      },
+    ]);
+  };
+  const listPosts = () => {
+    addNewTabItem([
+      {
+        tabId: 2,
+        label: "Yazılar",
+      },
+    ]);
+  };
   return (
     <Menu>
       <MenuButton
@@ -26,11 +42,11 @@ function QuickMenu() {
         className="quickMenuBtn"
       />
       <MenuList>
-        <MenuItem icon={<AddIcon />} command="⌘T">
-          New Tab
+        <MenuItem icon={<AddIcon />} command="⌘T" onClick={addNewPost}>
+          Yazı Ekle
         </MenuItem>
-        <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
-          New Window
+        <MenuItem icon={<ExternalLinkIcon />} command="⌘N" onClick={listPosts}>
+          Yazılar
         </MenuItem>
         <MenuItem icon={<RepeatIcon />} command="⌘⇧N">
           Open Closed Tab

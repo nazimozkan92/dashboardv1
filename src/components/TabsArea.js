@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon, CalendarIcon, AddIcon } from "@chakra-ui/icons";
 import Sidebar from "./Sidebar";
+import QuickMenu from "./QuickMenu";
 
 import Dashboard from "../pages/Dashboard";
 import AddNewPost from "../pages/AddNewPost";
@@ -17,13 +18,7 @@ import ComingSoon from "../pages/ComingSoon";
 function TabsArea() {
   const dragItem = useRef();
   const dragOverItem = useRef();
-  const defaultName = "New Tab";
-  const [tabs, setTabs] = useState([
-    {
-      tabId: 0,
-      label: "Dashboard",
-    },
-  ]);
+  const [tabs, setTabs] = useState([]);
   const [activeTabId, setActiveTabId] = useState(0);
 
   const dragStart = (e, position) => {
@@ -99,34 +94,46 @@ function TabsArea() {
       }
     }
   };
+  //TODO: index 0 dan başlıyor...
 
   console.log("aktif tab id", tabs);
 
   return (
     <>
       <Tabs size="md" variant="enclosed">
-        <TabList className="tabButtonArea">
+        <TabList className="tabBtnArea">
+          <Tab className="tabBtn" isSelected={true}>
+            <div className="tabBtnLeft">
+              <CalendarIcon className="tabBtnIcon" />
+              Dashboard
+            </div>
+          </Tab>
           {tabs.map((item, index) => (
             <Tab
               key={index}
-              className="tabButton"
+              className="tabBtn"
               draggable
               onDragStart={(e) => dragStart(e, index)}
               onDragEnter={(e) => dragEnter(e, index)}
               onDragEnd={drop}
               isSelected={true}
+              id={item.tabId}
             >
-              <CalendarIcon className="tabButtonIcon" />
-              {item.label}
-              <Button
-                className="tabCloseButton"
-                colorScheme="teal"
-                variant="ghost"
-                value={item.tabId}
-                onClick={removeTabItem}
-              >
-                <CloseIcon className="tabButtonIcon" />
-              </Button>
+              <div className="tabBtnLeft">
+                <CalendarIcon className="tabBtnIcon" />
+                {item.label}
+              </div>
+              <div className="tabBtnRight">
+                <Button
+                  className="tabCloseBtn"
+                  colorScheme="teal"
+                  variant="ghost"
+                  value={item.tabId}
+                  onClick={removeTabItem}
+                >
+                  <CloseIcon className="tabBtnIcon" />
+                </Button>
+              </div>
             </Tab>
           ))}
         </TabList>
@@ -145,6 +152,7 @@ function TabsArea() {
         </TabPanels>
       </Tabs>
       <Sidebar addNewTabItem={addNewTabItem} className="sidebarArea" />
+      <QuickMenu addNewTabItem={addNewTabItem} />
     </>
   );
 }

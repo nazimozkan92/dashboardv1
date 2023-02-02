@@ -50,12 +50,10 @@
 
 /*#endregion Sidebar*/
 /*#region QuickMenu*/
-.quickMenuArea {
+.quickMenuBtn {
   position: fixed;
-  top: 93vh;
+  top: 80vh;
   left: 2vw;
-}
-.quickMenuArea .quickMenuButton {
   border-radius: 50px;
 }
 
@@ -64,22 +62,47 @@
 .tabsArea {
   margin-top: 0px;
 }
-.tabsArea .tabButtonArea {
+.tabsArea .tabBtnArea {
   width: 100vw;
   height: 4vh;
 }
-.tabsArea .tabButtonArea .tabButton {
+.tabsArea .tabBtnArea .tabBtn {
   width: 15%;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
 }
-.tabsArea .tabButtonArea .tabCloseButton {
+.tabsArea .tabBtnArea .tabBtnLeft {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 45%;
+}
+.tabsArea .tabBtnArea .tabCloseBtn {
   border-radius: 50px;
   width: 20px;
   height: 20px;
 }
-.tabsArea .tabButtonArea .tabButtonIcon {
+.tabsArea .tabBtnArea .tabBtnIcon {
+  margin: 0px 10px 0px 0px;
   font-size: 10px;
 }
 
-/*#endregion TabsArea*//*# sourceMappingURL=style.css.map */
+/*#endregion TabsArea*/
+/*#region AddNewPost*/
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.editor-class {
+  background-color: lightgray;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+.toolbar-class {
+  border: 1px solid #ccc;
+}
+
+/*#endregion AddNewPost*//*# sourceMappingURL=style.css.map */

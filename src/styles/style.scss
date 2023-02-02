@@ -46,35 +46,56 @@
 /*#endregion Sidebar*/
 
 /*#region QuickMenu*/
-.quickMenuArea {
+.quickMenuBtn {
   position: fixed;
-  top: 93vh;
+  top: 80vh;
   left: 2vw;
-  .quickMenuButton {
-    border-radius: 50px;
-  }
+  border-radius: 50px;
 }
 /*#endregion QuickMenu*/
 
 /*#region TabsArea*/
 .tabsArea {
   margin-top: 0px;
-  .tabButtonArea {
+  .tabBtnArea {
     width: 100vw;
     height: 4vh;
-    .tabButton {
+    .tabBtn {
       width: 15%;
+      padding: 10px;
       display: flex;
       justify-content: space-between;
     }
-    .tabCloseButton {
+    .tabBtnLeft {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 45%;
+    }
+    .tabCloseBtn {
       border-radius: 50px;
       width: 20px;
       height: 20px;
     }
-    .tabButtonIcon {
+    .tabBtnIcon {
+      margin: 0px 10px 0px 0px;
       font-size: 10px;
     }
   }
 }
 /*#endregion TabsArea*/
+
+/*#region AddNewPost*/
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.editor-class {
+  background-color: lightgray;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.toolbar-class {
+  border: 1px solid #ccc;
+}
+/*#endregion AddNewPost*/
