@@ -8,6 +8,7 @@ import {
   Tab,
   TabPanel,
   Divider,
+  IconButton,
 } from "@chakra-ui/react";
 import { CloseIcon, CalendarIcon } from "@chakra-ui/icons";
 import Sidebar from "./Sidebar";
@@ -122,15 +123,15 @@ function TabsArea() {
                 </div>
                 {item.tabId != 0 ? (
                   <div className="tabBtnRight">
-                    <Button
+                    <IconButton
                       className="tabCloseBtn"
+                      icon={<CloseIcon className="tabCloseBtn" />}
+                      size="xs"
                       colorScheme="teal"
                       variant="ghost"
                       value={item.tabId}
                       onClick={removeTabItem}
-                    >
-                      <CloseIcon className="tabBtnIcon" />
-                    </Button>
+                    />
                   </div>
                 ) : (
                   <div className="d-none"></div>

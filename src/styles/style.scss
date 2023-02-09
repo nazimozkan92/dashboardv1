@@ -47,6 +47,7 @@
 
 /*#region QuickMenu*/
 .quickMenuBtn {
+  height: 4vh !important;
   font-size: 12px !important;
 }
 /*#endregion QuickMenu*/
@@ -63,22 +64,21 @@
       display: flex;
       justify-content: space-between;
     }
-    .tabBtnLeft {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 45%;
-    }
-    .tabCloseBtn {
-      border-radius: 50px;
-      width: 20px;
-      height: 20px;
-    }
-    .tabBtnIcon {
-      margin: 0px 10px 0px 0px;
-      font-size: 10px;
-    }
   }
+}
+.tabBtnLeft {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 45%;
+}
+.tabCloseBtn {
+  border-radius: 50px !important;
+  font-size: 12px;
+}
+.tabBtnIcon {
+  margin: 0px 10px 0px 0px;
+  font-size: 10px;
 }
 .tabDivider {
   height: 70% !important;
