@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNewTab } from "../context/NewTabContext";
 import {
   Button,
   Tabs,
@@ -6,20 +7,34 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Divider,
 } from "@chakra-ui/react";
-import { CloseIcon, CalendarIcon, AddIcon } from "@chakra-ui/icons";
+import { CloseIcon, CalendarIcon } from "@chakra-ui/icons";
 import Sidebar from "./Sidebar";
 import QuickMenu from "./QuickMenu";
-
 import Dashboard from "../pages/Dashboard";
 import AddNewPost from "../pages/AddNewPost";
 import ComingSoon from "../pages/ComingSoon";
+import Posts from "../pages/Posts";
+import Post from "../pages/Post";
 
 function TabsArea() {
+  const { tabData } = useNewTab();
   const dragItem = useRef();
   const dragOverItem = useRef();
-  const [tabs, setTabs] = useState([]);
-  const [activeTabId, setActiveTabId] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [tabs, setTabs] = useState([
+    {
+      tabId: 0,
+      label: "Dashboard",
+    },
+  ]);
+
+  useEffect(() => {
+    if (tabData.length != 0) {
+      addNewTabItem(tabData);
+    }
+  }, [tabData]);
 
   const dragStart = (e, position) => {
     dragItem.current = position;
@@ -39,22 +54,21 @@ function TabsArea() {
     setTabs(copyListItems);
   };
 
-  const addNewTabItem = (type) => {
-    let data = type[0];
-    console.log("gelen array", data.tabId);
+  const addNewTabItem = (tabData) => {
+    let data = tabData;
     const checkArray = tabs.find((item) => item.tabId == data.tabId);
-    console.log("array kontrol", checkArray);
-
+    const getIndexOfCurrent = tabs.findIndex(
+      (item) => item.tabId == tabData.tabId
+    );
     if (!checkArray) {
       const newTab = tabs.concat({
         tabId: data.tabId,
         label: data.label,
       });
       setTabs(newTab);
-      setActiveTabId(data.tabId);
+      setTabIndex(tabIndex + 1);
     } else {
-      setActiveTabId(data.tabId);
-      console.log("tab zaten var");
+      setTabIndex(getIndexOfCurrent);
     }
   };
 
@@ -64,86 +78,84 @@ function TabsArea() {
       const getIndexOfCurrent = tabs.findIndex(
         (item) => item.tabId == currentTabId
       );
-      if (tabs.length > 1) {
-        console.log("tab içeriğine bak");
-        const previousTab = getIndexOfCurrent - 1;
-        const previousItem = tabs[previousTab];
-
-        if (previousItem != null) {
-          const previousId = previousItem.tabId;
-          console.log(previousId, "önceki id");
-          setActiveTabId(previousId);
-        } else {
-          const nextTab = getIndexOfCurrent + 1;
-          const netxtItem = tabs[nextTab];
-          const nextId = netxtItem.tabId;
-          setActiveTabId(nextId);
-        }
-        setTabs((current) =>
-          current.filter((items) => {
-            return items.tabId != currentTabId;
-          })
-        );
+      const previousTab = getIndexOfCurrent - 1;
+      const nextTab = getIndexOfCurrent + 1;
+      if (previousTab != null) {
+        setTabIndex(previousTab);
       } else {
-        addNewTabItem();
-        setTabs((current) =>
-          current.filter((items) => {
-            return items.tabId != currentTabId;
-          })
-        );
+        setTabIndex(nextTab);
       }
+      setTabs((current) =>
+        current.filter((items) => {
+          return items.tabId != currentTabId;
+        })
+      );
     }
   };
-  //TODO: index 0 dan başlıyor...
 
-  console.log("aktif tab id", tabs);
+  const handleTabsChange = (index) => {
+    setTabIndex(index);
+  };
 
   return (
     <>
-      <Tabs size="md" variant="enclosed">
+      <Tabs
+        index={tabIndex}
+        onChange={handleTabsChange}
+        size="md"
+        variant="enclosed"
+      >
         <TabList className="tabBtnArea">
-          <Tab className="tabBtn" isSelected={true}>
-            <div className="tabBtnLeft">
-              <CalendarIcon className="tabBtnIcon" />
-              Dashboard
-            </div>
-          </Tab>
           {tabs.map((item, index) => (
-            <Tab
-              key={index}
-              className="tabBtn"
-              draggable
-              onDragStart={(e) => dragStart(e, index)}
-              onDragEnter={(e) => dragEnter(e, index)}
-              onDragEnd={drop}
-              isSelected={true}
-              id={item.tabId}
-            >
-              <div className="tabBtnLeft">
-                <CalendarIcon className="tabBtnIcon" />
-                {item.label}
-              </div>
-              <div className="tabBtnRight">
-                <Button
-                  className="tabCloseBtn"
-                  colorScheme="teal"
-                  variant="ghost"
-                  value={item.tabId}
-                  onClick={removeTabItem}
-                >
-                  <CloseIcon className="tabBtnIcon" />
-                </Button>
-              </div>
-            </Tab>
+            <>
+              <Tab
+                key={index}
+                className="tabBtn"
+                draggable
+                onDragStart={(e) => dragStart(e, index)}
+                onDragEnter={(e) => dragEnter(e, index)}
+                onDragEnd={drop}
+              >
+                <div className="tabBtnLeft">
+                  <CalendarIcon className="tabBtnIcon" />
+                  {item.label}
+                </div>
+                {item.tabId != 0 ? (
+                  <div className="tabBtnRight">
+                    <Button
+                      className="tabCloseBtn"
+                      colorScheme="teal"
+                      variant="ghost"
+                      value={item.tabId}
+                      onClick={removeTabItem}
+                    >
+                      <CloseIcon className="tabBtnIcon" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="d-none"></div>
+                )}
+              </Tab>
+              <Divider
+                orientation="vertical"
+                colorScheme="teal"
+                className="tabDivider"
+              />
+            </>
           ))}
+          <QuickMenu addNewTabItem={addNewTabItem} />
         </TabList>
         <TabPanels>
           {tabs.map((item, index) => (
-            <TabPanel key={index}>
+            <TabPanel key={index + 1}>
               {item.tabId == 0 ? (
                 <Dashboard />
               ) : item.tabId == 1 ? (
                 <AddNewPost />
+              ) : item.tabId == 2 ? (
+                <Posts />
+              ) : item.tabId == 3 ? (
+                <Post />
               ) : (
                 <ComingSoon />
               )}
@@ -152,7 +164,6 @@ function TabsArea() {
         </TabPanels>
       </Tabs>
       <Sidebar addNewTabItem={addNewTabItem} className="sidebarArea" />
-      <QuickMenu addNewTabItem={addNewTabItem} />
     </>
   );
 }

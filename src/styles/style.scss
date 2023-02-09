@@ -15,8 +15,8 @@
 }
 .menuOpenButton {
   width: 20px;
-  top: 40vh;
-  position: fixed;
+  top: 50vh;
+  position: fixed !important;
 }
 .sidebarModal {
   width: 20vw !important;
@@ -47,10 +47,7 @@
 
 /*#region QuickMenu*/
 .quickMenuBtn {
-  position: fixed;
-  top: 80vh;
-  left: 2vw;
-  border-radius: 50px;
+  font-size: 12px !important;
 }
 /*#endregion QuickMenu*/
 
@@ -82,6 +79,10 @@
       font-size: 10px;
     }
   }
+}
+.tabDivider {
+  height: 70% !important;
+  margin-top: 5px;
 }
 /*#endregion TabsArea*/
 

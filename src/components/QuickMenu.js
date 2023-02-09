@@ -1,8 +1,10 @@
+import React from "react";
+import { useNewTab } from "../context/NewTabContext";
+
 import {
   AddIcon,
   EditIcon,
   ExternalLinkIcon,
-  HamburgerIcon,
   RepeatIcon,
 } from "@chakra-ui/icons";
 import {
@@ -12,32 +14,31 @@ import {
   MenuItem,
   IconButton,
 } from "@chakra-ui/react";
-import React from "react";
 
-function QuickMenu({ addNewTabItem }) {
+function QuickMenu() {
+  const { setTabData } = useNewTab();
+
   const addNewPost = () => {
-    addNewTabItem([
-      {
-        tabId: 1,
-        label: "Yazı Ekle",
-      },
-    ]);
+    setTabData({
+      tabId: 1,
+      label: "Yazı Ekle",
+    });
   };
+
   const listPosts = () => {
-    addNewTabItem([
-      {
-        tabId: 2,
-        label: "Yazılar",
-      },
-    ]);
+    setTabData({
+      tabId: 2,
+      label: "Yazılar",
+    });
   };
+  
   return (
     <Menu>
       <MenuButton
         as={IconButton}
         aria-label="Options"
-        icon={<HamburgerIcon />}
-        variant="outline"
+        icon={<AddIcon />}
+        variant="ghost"
         colorScheme="teal"
         className="quickMenuBtn"
       />

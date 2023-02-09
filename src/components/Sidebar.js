@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useNewTab } from "../context/NewTabContext";
 import {
   Drawer,
   DrawerOverlay,
@@ -22,24 +23,25 @@ import {
   AccordionPanel,
   Box,
 } from "@chakra-ui/react";
-import {
-  AddIcon,
-  ChevronRightIcon,
-  HamburgerIcon,
-  MinusIcon,
-} from "@chakra-ui/icons";
+import { AddIcon, ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
 
-function Sidebar({ addNewTabItem }) {
+function Sidebar() {
+  const { setTabData } = useNewTab();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openRef = useRef();
 
   const addNewPost = () => {
-    addNewTabItem([
-      {
-        tabId: 1,
-        label: "Yazı Ekle",
-      },
-    ]);
+    setTabData({
+      tabId: 1,
+      label: "Yazı Ekle",
+    });
+  };
+
+  const listPosts = () => {
+    setTabData({
+      tabId: 2,
+      label: "Yazılar",
+    });
   };
 
   return (
@@ -89,6 +91,7 @@ function Sidebar({ addNewTabItem }) {
                     </MenuItem>
                     <MenuItem
                       icon={<HamburgerIcon fontSize="10px" />}
+                      onClick={listPosts}
                       className="sidebarMenuItem"
                     >
                       Yazılar
