@@ -56,15 +56,15 @@ function TabsArea() {
   };
 
   const addNewTabItem = (tabData) => {
-    let data = tabData;
-    const checkArray = tabs.find((item) => item.tabId == data.tabId);
+    const checkArray = tabs.find((item) => item.tabId == tabData.tabId);
     const getIndexOfCurrent = tabs.findIndex(
       (item) => item.tabId == tabData.tabId
     );
     if (!checkArray) {
       const newTab = tabs.concat({
-        tabId: data.tabId,
-        label: data.label,
+        tabId: tabData.tabId,
+        label: tabData.label,
+        content: tabData.content,
       });
       setTabs(newTab);
       setTabIndex(tabIndex + 1);
@@ -98,6 +98,8 @@ function TabsArea() {
     setTabIndex(index);
   };
 
+  console.log(tabData.tabId);
+
   return (
     <>
       <Tabs
@@ -119,7 +121,9 @@ function TabsArea() {
               >
                 <div className="tabBtnLeft">
                   <CalendarIcon className="tabBtnIcon" />
-                  {item.label}
+                  {item.label.length > 20
+                    ? item.label.substring(0, 20) + "..."
+                    : item.label}
                 </div>
                 {item.tabId != 0 ? (
                   <div className="tabBtnRight">
@@ -148,14 +152,14 @@ function TabsArea() {
         </TabList>
         <TabPanels>
           {tabs.map((item, index) => (
-            <TabPanel key={index + 1}>
+            <TabPanel key={index + 1} className="tabPanelArea">
               {item.tabId == 0 ? (
                 <Dashboard />
               ) : item.tabId == 1 ? (
                 <AddNewPost />
               ) : item.tabId == 2 ? (
                 <Posts />
-              ) : item.tabId == 3 ? (
+              ) : item.tabId == tabData.tabId ? (
                 <Post />
               ) : (
                 <ComingSoon />
