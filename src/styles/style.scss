@@ -60,6 +60,7 @@
     height: 4vh;
     .tabBtn {
       width: 15%;
+      min-width: 120px;
       padding: 10px;
       display: flex;
       justify-content: space-between;
@@ -149,8 +150,14 @@
   justify-content: flex-end;
 }
 
+.postNavCategoryButton {
+  margin-top: 2vh;
+  display: flex !important;
+  justify-content: flex-end;
+}
+
 .postNavImageButton {
-  margin-top: 1vh;
+  margin-top: 2vh;
   display: flex !important;
   justify-content: flex-end;
 }

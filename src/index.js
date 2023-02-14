@@ -8,21 +8,14 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 root.render(
   <QueryClientProvider client={queryClient}>
     <ChakraProvider>
       <App />
     </ChakraProvider>
-    
+
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );

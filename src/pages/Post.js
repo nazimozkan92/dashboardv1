@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { useNewTab } from "../context/NewTabContext";
 import { fetchPost } from "../api";
 
 import {
@@ -14,6 +13,7 @@ import {
   Heading,
   Image,
   Input,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -29,16 +29,14 @@ import {
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-function Post() {
+function Post({ postId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { tabData } = useNewTab();
-  const tabId = tabData.tabId;
   const [checkedItems, setCheckedItems] = useState([false, false]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-  const { isLoading, isError, data } = useQuery(["test", tabId], () =>
-    fetchPost(tabId)
+  const { isLoading, isError, data } = useQuery(["postDetail", postId], () =>
+    fetchPost(postId)
   );
 
   if (isLoading) {
@@ -48,9 +46,6 @@ function Post() {
   if (isError) {
     <div>Error...</div>;
   }
-
-  console.log(data);
-
   return (
     <>
       <Grid
@@ -73,7 +68,7 @@ function Post() {
               data={data.shortText}
               onReady={(editor) => {
                 // You can store the "editor" and use when it is needed.
-                console.log("Editor is ready to use!", editor);
+                // console.log("Editor is ready to use!", editor);
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();
@@ -84,104 +79,124 @@ function Post() {
             />
           </div>
         </GridItem>
-          <GridItem pl="2" area={"nav"} className="postNavbar">
-            {/* Kategoriler */}
-            <Box
-              maxW="sm"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              p="2"
-              className="postNavPanels"
+        <GridItem pl="2" area={"nav"} className="postNavbar">
+          {/* Kategoriler */}
+          <Box
+            maxW="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p="2"
+            className="postNavPanels"
+          >
+            <Heading as="h4" size="md">
+              Kategoriler
+            </Heading>
+            <Divider className="postNavDiv" />
+            <Checkbox
+              isChecked={allChecked}
+              isIndeterminate={isIndeterminate}
+              onChange={(e) =>
+                setCheckedItems([e.target.checked, e.target.checked])
+              }
             >
-              <Heading as="h4" size="md">
-                Kategoriler
-              </Heading>
-              <Divider className="postNavDiv" />
-              <Stack>
-                <Checkbox
-                  isChecked={allChecked}
-                  isIndeterminate={isIndeterminate}
-                  onChange={(e) =>
-                    setCheckedItems([e.target.checked, e.target.checked])
-                  }
-                >
-                  Kategori 1
-                </Checkbox>
-
-                <Checkbox
-                  isChecked={allChecked}
-                  isIndeterminate={isIndeterminate}
-                  onChange={(e) =>
-                    setCheckedItems([e.target.checked, e.target.checked])
-                  }
-                >
-                  Kategori 2
-                </Checkbox>
-              </Stack>
-            </Box>
-
-            {/* Yazarlar */}
-            <Box
-              maxW="sm"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              p="2"
-              className="postNavPanels"
-            >
-              <Heading as="h4" size="md">
-                Yazar
-              </Heading>
-              <Divider className="postNavDiv" />
-              <Stack>
-                <Checkbox
-                  isChecked={allChecked}
-                  isIndeterminate={isIndeterminate}
-                  onChange={(e) =>
-                    setCheckedItems([e.target.checked, e.target.checked])
-                  }
-                >
-                  Yazar Adı 1
-                </Checkbox>
-              </Stack>
-              <Stack>
-                <Checkbox
-                  isChecked={allChecked}
-                  isIndeterminate={isIndeterminate}
-                  onChange={(e) =>
-                    setCheckedItems([e.target.checked, e.target.checked])
-                  }
-                >
-                  Yazar Adı 2
-                </Checkbox>
-              </Stack>
-            </Box>
-
-            {/* Görsel */}
-            <Box
-              maxW="sm"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              p="2"
-              className="postNavPanels"
-            >
-              <Heading as="h4" size="md">
-                Kapak Görseli
-              </Heading>
-              <Divider className="postNavDiv" />
-              <Image src="https://bit.ly/dan-abramov" alt="Dan Abramov" />
-              <div className="postNavImageButton">
-                <Button colorScheme="teal" variant="outline" onClick={onOpen}>
-                  Görsel Yükle
-                </Button>
-              </div>
-            </Box>
-            <div className="postNavButton">
-              <Button colorScheme="teal">Güncelle</Button>
+              {data.categoryList}
+            </Checkbox>
+            <Stack pl={6} mt={1} spacing={1}>
+              {/* <Checkbox
+                isChecked={checkedItems[0]}
+                onChange={(e) =>
+                  setCheckedItems([e.target.checked, checkedItems[1]])
+                }
+              >
+                Child Checkbox 1
+              </Checkbox>
+              <Checkbox
+                isChecked={checkedItems[1]}
+                onChange={(e) =>
+                  setCheckedItems([checkedItems[0], e.target.checked])
+                }
+              >
+                Child Checkbox 2
+              </Checkbox> */}
+            </Stack>
+            <div className="postNavCategoryButton">
+              <Button
+                colorScheme="teal"
+                variant="outline"
+                size="sm"
+                onClick={onOpen}
+              >
+                Güncelle
+              </Button>
             </div>
-          </GridItem>
+          </Box>
+
+          {/* Yazarlar */}
+          <Box
+            maxW="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p="2"
+            className="postNavPanels"
+          >
+            <Heading as="h4" size="md">
+              Yazar
+            </Heading>
+            <Divider className="postNavDiv" />
+            <Stack>
+              <Link>{data.authorName}</Link>
+            </Stack>
+          </Box>
+
+          {/* Görsel */}
+          <Box
+            maxW="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p="2"
+            className="postNavPanels"
+          >
+            <Heading as="h4" size="md">
+              Kapak Görseli
+            </Heading>
+            <Divider className="postNavDiv" />
+            <Image src={data.pictureList} alt="Dan Abramov" />
+            <div className="postNavImageButton">
+              <Button
+                colorScheme="teal"
+                variant="outline"
+                size="sm"
+                onClick={onOpen}
+              >
+                Görsel Yükle
+              </Button>
+            </div>
+          </Box>
+
+          {/* Yorumlar */}
+          <Box
+            maxW="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            p="2"
+            className="postNavPanels"
+          >
+            <Heading as="h4" size="md">
+              Yorumlar
+            </Heading>
+            <Divider className="postNavDiv" />
+            <Stack>
+              <Link>{data.commentList}</Link>;
+            </Stack>
+          </Box>
+          <div className="postNavButton">
+            <Button colorScheme="teal">Güncelle</Button>
+          </div>
+        </GridItem>
       </Grid>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

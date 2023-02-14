@@ -20,8 +20,9 @@ function QuickMenu() {
 
   const addNewPost = () => {
     setTabData({
-      tabId: 1,
+      tabId: 9,
       label: "Yazı Ekle",
+      content: "0",
     });
   };
 
@@ -29,9 +30,10 @@ function QuickMenu() {
     setTabData({
       tabId: 2,
       label: "Yazılar",
+      content: "0",
     });
   };
-  
+
   return (
     <Menu>
       <MenuButton

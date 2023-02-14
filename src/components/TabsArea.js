@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNewTab } from "../context/NewTabContext";
 import {
-  Button,
   Tabs,
   TabList,
   TabPanels,
@@ -71,6 +70,9 @@ function TabsArea() {
     } else {
       setTabIndex(getIndexOfCurrent);
     }
+
+    console.log(tabIndex);
+    console.log(tabs);
   };
 
   const removeTabItem = (e) => {
@@ -97,8 +99,6 @@ function TabsArea() {
   const handleTabsChange = (index) => {
     setTabIndex(index);
   };
-
-  console.log(tabData.tabId);
 
   return (
     <>
@@ -129,13 +129,14 @@ function TabsArea() {
                   <div className="tabBtnRight">
                     <IconButton
                       className="tabCloseBtn"
-                      icon={<CloseIcon className="tabCloseBtn" />}
                       size="xs"
                       colorScheme="teal"
                       variant="ghost"
                       value={item.tabId}
                       onClick={removeTabItem}
-                    />
+                    >
+                      <CloseIcon className="tabCloseBtn" />
+                    </IconButton>
                   </div>
                 ) : (
                   <div className="d-none"></div>
@@ -152,15 +153,15 @@ function TabsArea() {
         </TabList>
         <TabPanels>
           {tabs.map((item, index) => (
-            <TabPanel key={index + 1} className="tabPanelArea">
+            <TabPanel key={index} className="tabPanelArea">
               {item.tabId == 0 ? (
                 <Dashboard />
               ) : item.tabId == 1 ? (
                 <AddNewPost />
               ) : item.tabId == 2 ? (
                 <Posts />
-              ) : item.tabId == tabData.tabId ? (
-                <Post />
+              ) : tabs.filter((tab) => tab.tabId == tabData.tabId) ? (
+                <Post postId={item.content} />
               ) : (
                 <ComingSoon />
               )}
