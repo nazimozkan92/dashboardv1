@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { fetchPost } from "../api";
 
 import {
   Box,
   Button,
+  Card,
   Center,
   Checkbox,
   Divider,
@@ -22,7 +23,12 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
   Text,
+  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -35,6 +41,7 @@ function Post({ postId }) {
   const [checkedItems, setCheckedItems] = useState([false, false]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
   const { isLoading, isError, data } = useQuery(["postDetail", postId], () =>
     fetchPost(postId)
   );
@@ -46,17 +53,17 @@ function Post({ postId }) {
   if (isError) {
     <div>Error...</div>;
   }
+
   return (
-    <>
+    <Card>
       <Grid
-        templateAreas={`
-      "main nav"
-      `}
-        gridTemplateRows={"50px 1fr 30px"}
-        gridTemplateColumns={"80vw 1fr"}
-        h="92vh"
+        templateRows="repeat(1, 1fr)"
+        templateColumns="repeat(5, 1fr)"
+        w="100%"
+        gap={3}
+        p={2}
       >
-        <GridItem pl="2" area={"main"} className="postEditorArea">
+        <GridItem  colSpan={4} className="postEditorArea">
           <Input
             placeholder={data.title}
             defaultValue={data.title}
@@ -79,7 +86,7 @@ function Post({ postId }) {
             />
           </div>
         </GridItem>
-        <GridItem pl="2" area={"nav"} className="postNavbar">
+        <GridItem colSpan={1} className="postNavbar">
           {/* Kategoriler */}
           <Box
             maxW="sm"
@@ -186,18 +193,46 @@ function Post({ postId }) {
             className="postNavPanels"
           >
             <Heading as="h4" size="md">
-              Yorumlar
+              Son Yorum
             </Heading>
             <Divider className="postNavDiv" />
-            <Stack>
-              <Link>{data.commentList}</Link>;
-            </Stack>
+            {data.commentList.length > 0 ? (
+              <>
+                <TableContainer>
+                  <Table variant="simple">
+                    <Tbody>
+                      <Tr>
+                        <Td>
+                          <Link>
+                            {data.commentList[data.commentList.length - 1]}
+                          </Link>
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+                <div className="postNavImageButton">
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    size="sm"
+                    onClick={onOpen}
+                  >
+                    Tüm Yorumlar ({data.commentList.length})
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>"Henüz yorum yok"</>
+            )}
           </Box>
           <div className="postNavButton">
             <Button colorScheme="teal">Güncelle</Button>
           </div>
         </GridItem>
       </Grid>
+
+      {/* Görsel yükleme */}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -215,7 +250,7 @@ function Post({ postId }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Card>
   );
 }
 

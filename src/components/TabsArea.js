@@ -12,7 +12,7 @@ import {
 import { CloseIcon, CalendarIcon } from "@chakra-ui/icons";
 import Sidebar from "./Sidebar";
 import QuickMenu from "./QuickMenu";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import AddNewPost from "../pages/AddNewPost";
 import ComingSoon from "../pages/ComingSoon";
 import Posts from "../pages/Posts";
@@ -118,6 +118,7 @@ function TabsArea() {
                 onDragStart={(e) => dragStart(e, index)}
                 onDragEnter={(e) => dragEnter(e, index)}
                 onDragEnd={drop}
+                _selected={{ bg: "white" }}
               >
                 <div className="tabBtnLeft">
                   <CalendarIcon className="tabBtnIcon" />
