@@ -3,6 +3,7 @@ import {
   Flex,
   Image,
   Link,
+  List,
   Table,
   TableContainer,
   Tbody,
@@ -62,7 +63,16 @@ function Posts() {
                   </Link>
                 </Td>
                 <Td>{item.shortText}</Td>
-                <Td>{item.categoryList}</Td>
+                <Td>
+                  {item.categoryList.map((category, index) => {
+                    return (
+                      <Link key={index}>
+                        {category}
+                        {category[1] == null ? null : ","}{" "}
+                      </Link>
+                    );
+                  })}
+                </Td>
                 <Td>{item.authorName}</Td>
                 <Td>{item.commentCount}</Td>
                 <Td>{item.publishDate.toLocaleString()}</Td>
