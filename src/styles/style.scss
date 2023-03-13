@@ -1,13 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100;8..144,200;8..144,300;8..144,400;8..144,500;8..144,600;8..144,700;8..144,800;8..144,900;8..144,1000&display=swap");
 @import "_colors.scss";
 
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+td {
+  color: $fontColor !important;
+}
+
+button {
+  background-color: $btnBackColor;
+}
+
 .body {
   width: 100% !important;
 }
 .boardArea {
   width: 100vw;
   height: 100vh;
-  background-color: #f5f5f7;
+  background-color: $backgroundColor;
 }
 
 .componentBody {
@@ -125,8 +142,44 @@
 
 /*#region PostList*/
 
+.postListHeader {
+}
+
+.postListArea {
+  text-align: left;
+  padding: 0 !important;
+}
+
+.postListGrid {
+  width: 100%;
+}
+
 .postListImg {
   max-width: 80px;
+}
+
+.quickEditBody {
+  display: flex !important;
+}
+
+.quickEditInput {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quickEditTitle {
+  margin-bottom: 5px;
+  font-weight: bold;
+  width: 50% !important;
+}
+.quickEditBottomArea {
+  display: flex;
+}
+
+.quickEditShortText {
+  margin-bottom: 5px;
+  width: 49% !important;
 }
 
 /*#endregion PostList*/
@@ -146,7 +199,7 @@
     border-color: #dce6f1 !important;
     border-bottom-left-radius: 0.375rem !important;
     border-bottom-right-radius: 0.375rem !important;
-    height: 84vh;
+    height: 79vh;
   }
 
   .ck.ck-toolbar {
@@ -165,9 +218,9 @@
 }
 
 .postNavButton {
-  display: flex !important;
-  justify-content: flex-end;
-  margin-top: 13%;
+  position: fixed;
+  top: 94vh;
+  left: 94.2vw;
 }
 
 .postNavCategoryButton {
@@ -183,6 +236,12 @@
 }
 
 /*#endregion Post*/
+
+/*#region CategoryModal*/
+.categoryModal {
+  height: 500px;
+}
+/*#endregion CategoryModal*/
 
 /*#region AddNewPost*/
 .wrapper-class {

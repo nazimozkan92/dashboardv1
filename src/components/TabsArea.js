@@ -10,13 +10,14 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CloseIcon, CalendarIcon } from "@chakra-ui/icons";
+
 import Sidebar from "./Sidebar";
 import QuickMenu from "./QuickMenu";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import AddNewPost from "../pages/AddNewPost";
 import ComingSoon from "../pages/ComingSoon";
-import Posts from "../pages/Posts";
-import Post from "../pages/Post";
+import AddNewPost from "../pages/Post/AddNewPost/addNewPost";
+import Posts from "../pages/Post/posts";
+import PostDetail from "../pages/Post/postDetail";
 
 function TabsArea() {
   const { tabData } = useNewTab();
@@ -70,9 +71,6 @@ function TabsArea() {
     } else {
       setTabIndex(getIndexOfCurrent);
     }
-
-    console.log(tabIndex);
-    console.log(tabs);
   };
 
   const removeTabItem = (e) => {
@@ -157,12 +155,12 @@ function TabsArea() {
             <TabPanel key={index} className="tabPanelArea">
               {item.tabId == 0 ? (
                 <Dashboard />
-              ) : item.tabId == 1 ? (
+              ) : item.tabId == 3 ? (
                 <AddNewPost />
               ) : item.tabId == 2 ? (
                 <Posts />
               ) : tabs.filter((tab) => tab.tabId == tabData.tabId) ? (
-                <Post postId={item.content} />
+                <PostDetail postId={item.content} />
               ) : (
                 <ComingSoon />
               )}

@@ -1,4 +1,4 @@
-import { AddIcon, CheckIcon, DeleteIcon } from "@chakra-ui/icons";
+import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Button,
   Card,

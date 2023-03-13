@@ -20,6 +20,14 @@ function QuickMenu() {
 
   const addNewPost = () => {
     setTabData({
+      tabId: 3,
+      label: "Yazı Ekle",
+      content: "0",
+    });
+  };
+
+  const updatePost = () => {
+    setTabData({
       tabId: 9,
       label: "Yazı Ekle",
       content: "0",
@@ -50,12 +58,6 @@ function QuickMenu() {
         </MenuItem>
         <MenuItem icon={<ExternalLinkIcon />} command="⌘N" onClick={listPosts}>
           Yazılar
-        </MenuItem>
-        <MenuItem icon={<RepeatIcon />} command="⌘⇧N">
-          Open Closed Tab
-        </MenuItem>
-        <MenuItem icon={<EditIcon />} command="⌘O">
-          Open File...
         </MenuItem>
       </MenuList>
     </Menu>

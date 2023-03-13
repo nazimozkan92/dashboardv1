@@ -5,13 +5,13 @@ import NewTabContext, { NewTabProvider } from "./context/NewTabContext";
 function App() {
   return (
     <NewTabProvider>
-      <Router>
-        <div id="content">
-          <Routes>
-            <Route path="/" exact element={<HomeBoard />} />
-          </Routes>
-        </div>
-      </Router>
+        <Router>
+          <div id="content">
+            <Routes>
+              <Route path="/" exact element={<HomeBoard />} />
+            </Routes>
+          </div>
+        </Router>
     </NewTabProvider>
   );
 }

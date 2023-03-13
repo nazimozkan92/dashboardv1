@@ -1,11 +1,12 @@
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
-import CommentList from "./CommentList";
 
-import CounterArea from "./CounterArea";
-import PostList from "./PostList";
-import SubscribeList from "./SubscribeList";
-import TrendPosts from "./TrendPosts";
+
+import CommentList from "./commentList";
+import CounterArea from "./counterArea";
+import PostList from "./postList";
+import SubscribeList from "./subscribeList";
+import TrendPosts from "./trendPosts";
 
 function Dashboard() {
   return (
