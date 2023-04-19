@@ -19,7 +19,7 @@ jobs:
         npm run build
     
     - name: 📂 Sync files
-      uses: dashboardv1/FTP-Deploy-Action@v4.3.4
+      uses: dashboardv1/master@v4.3.4
       with:
         ftp_host: ${{ secrets.FTP_HOST }}
         ftp_username: ${{ secrets.FTP_USERNAME }}
