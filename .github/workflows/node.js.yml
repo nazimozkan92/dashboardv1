@@ -29,7 +29,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: 📂 Sync files
-      uses: nazimozkan92/dashboardv1@releases/v1.0.0
+      uses: nazimozkan92/dashboardv1@releases/Publish
       with:
         ftp_host: ${{ secrets.FTP_HOST }}
         ftp_username: ${{ secrets.FTP_USERNAME }}
