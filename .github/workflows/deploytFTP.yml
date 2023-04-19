@@ -24,7 +24,7 @@ jobs:
         ftp_host: ${{ secrets.FTP_HOST }}
         ftp_username: ${{ secrets.FTP_USERNAME }}
         ftp_password: ${{ secrets.FTP_PASSWORD }}
-        local_source_dir: "dist"
+        local_source_dir: "static"
         dist_target_dir: "public_html/devop/test"
         delete: "false"
         exclude: "'^logs/' '^README.md'"
